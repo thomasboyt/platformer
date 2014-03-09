@@ -1,6 +1,6 @@
 import Platform from './platform';
 
-import {sidesForEntity, rectangleIntersection} from './util';
+import {rectangleIntersection} from './util';
 
 var Maths = require('coquette').Collider.Maths;
 
@@ -54,8 +54,8 @@ Player.prototype.update = function(dt) {
 
 Player.prototype.collision = function(other, type) {
   if (other instanceof Platform) {
-
     var intersect = rectangleIntersection(this, other);
+
     if (intersect.w > intersect.h) {
       // do y correction
       if (intersect.fromAbove) {
@@ -66,6 +66,7 @@ Player.prototype.collision = function(other, type) {
       }
       this.vy = 0;
     } else {
+      // do x correction
       if (intersect.fromLeft) {
         this.center.x -= intersect.w;
       } else {
@@ -73,60 +74,6 @@ Player.prototype.collision = function(other, type) {
       }
       this.vx = 0;
     }
-
-    /*
-     * If the intersection of the two rects is wider than it is deep, you’ll assume that the correct resolution in this case is vertical. If the intersecting rect is taller than it is wide, you’ll resolve it horizontally.
-     */
-
-    /*var xdiff = 0;
-    var ydiff = (other.center.y - other.size.y / 2) - (this.center.y + this.size.y / 2);
-    if (this.vx < 0) {
-      xdiff = (other.center.x + (other.size.x /2)) - (this.center.x - (this.size.x / 2));
-    } else if (this.vx > 0) {
-      xdiff = (other.center.x - (other.size.x /2)) - (this.center.x + (this.size.x / 2));
-    }
-
-    var solved;
-    while (!solved)
-        if (ydiff < 0 && this.vy >= 0) {  // allow one-way movement thru
-          this.center.y += ydiff;
-          this.grounded = true;
-          }*/
-
-    // this is dumb v
-    //var xdiff = (other.center.x + other.size.x / 2) - (this.center.x + this.size.x / 2);
-    /*var ydiff = (other.center.y - other.size.y / 2) - (this.center.y + this.size.y / 2);
-
-    var otherEdge, thisEdge;
-    if (this.vx !== 0) {
-      if (this.vx > 0) {
-        // walking right, so care about left edge
-        otherEdge = other.center.x - other.size.x / 2;
-        thisEdge = this.center.x - this.size.x / 2;
-      } else if (this.vx < 0) {
-        // walking left, so care about right edge
-        otherEdge = other.center.x + other.size.x / 2;
-        thisEdge = this.center.x + this.size.x / 2;
-      }
-      var xdiff = otherEdge - thisEdge;
-      if (!this.grounded) {
-        console.log(xdiff);
-      }
-    }
-
-
-    if (ydiff < 0 && this.vy >= 0) {  // allow one-way movement thru
-      this.vy = 0;
-      this.center.y += ydiff;
-      this.grounded = true;
-    }
-
-    //if (Math.abs(ydiff) < Math.abs(xdiff)) {
-      
-      /*} else {
-      this.vx = 0;
-      this.center.x += xdiff;
-      }*/
   }
 };
 
