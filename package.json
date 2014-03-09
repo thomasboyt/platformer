@@ -1,0 +1,15 @@
+{
+  "name": "changeme",
+  "devDependencies": {
+    "gulp-util": "~2.2.14",
+    "gulp": "~3.5.2",
+    "gulp-concat": "~2.1.7",
+    "gulp-connect": "~0.4.0",
+    "gulp-load-plugins": "~0.3.0",
+    "gulp-browserify": "~0.4.6",
+    "browserify-es6-modules": "~0.1.0"
+  },
+  "dependencies": {
+    "coquette": "git://github.com/thomasboyt/coquette#browserify"
+  }
+}
