@@ -31,6 +31,10 @@ Player.prototype.update = function(dt) {
 
   var step = dt/100;
 
+  if (this.vy) {
+    this.grounded = false;
+  }
+
   if (c.inputter.isPressed(c.inputter.SPACE) && this.grounded) {
     this.vy = JUMP_VEL;
     this.grounded = false;
@@ -60,11 +64,16 @@ Player.prototype.collision = function(other, type) {
       // do y correction
       if (intersect.fromAbove) {
         this.center.y -= intersect.h;
-        this.grounded = true;
+
+        // prevent "sticky corners" while ascending
+        if (this.vy > 0) {
+          this.grounded = true;
+          this.vy = 0;
+        }
       } else {
         this.center.y += intersect.h;
+        this.vy = 0;
       }
-      this.vy = 0;
     } else {
       // do x correction
       if (intersect.fromLeft) {
