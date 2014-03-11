@@ -1,10 +1,13 @@
 import Platform from './platform';
+import PlatformController from './platform_controller';
 
 import {rectangleIntersection} from './util';
 
 var Maths = require('coquette').Collider.Maths;
 
 var Player = function(game, settings) {
+  this.platformController = c.entities.all(PlatformController)[0];
+
   this.size = {x: 20, y: 20};
   this.boundingBox = c.collider.RECTANGLE;
   this.angle = 0;
@@ -14,7 +17,7 @@ var Player = function(game, settings) {
   }
 
   this.vx = 0;
-  this.vy = 0;
+  this.vy = this.platformController.scrollSpeed;
 };
 
 Player.prototype.draw = function(ctx) {
@@ -31,7 +34,9 @@ Player.prototype.update = function(dt) {
 
   var step = dt/100;
 
-  if (this.vy) {
+  // TODO: edge case where speed == scroll speed but you're not actually grounded
+  // this could be replaced w/ a few different things
+  if (this.vy !== this.platformController.scrollSpeed) {
     this.grounded = false;
   }
 
@@ -68,11 +73,11 @@ Player.prototype.collision = function(other, type) {
         // prevent "sticky corners" while ascending
         if (this.vy > 0) {
           this.grounded = true;
-          this.vy = 0;
+          this.vy = this.platformController.scrollSpeed;
         }
       } else {
-        this.center.y += intersect.h;
-        this.vy = 0;
+        this.center.y += Math.ceil(intersect.h);
+        this.vy = this.platformController.scrollSpeed;
       }
     } else {
       // do x correction
