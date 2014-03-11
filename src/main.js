@@ -10,7 +10,7 @@ var Game = function(canvasId, width, height) {
   c.entities.create(PlatformController, {});
 
   c.entities.create(Player, {
-    center: {x: 400, y: 300}
+    center: {x: 400, y: 250}
   });
 };
 

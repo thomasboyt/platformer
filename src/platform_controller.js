@@ -8,44 +8,31 @@ var PlatformController = function(game, settings) {
   // starting platforms
   this.platforms = [
 
-    // solid ground
     c.entities.create(Platform, {
       center: {x: 250, y: 400},
-      size: {x: 500, y: 200}
-    }),
-
-    // ledge w/ hole
-
-    c.entities.create(Platform, {
-      center: {x: 100, y: 200},
-      size: {x: 200, y: 25}
+      size: {x: 500, y: 25}
     }),
 
     c.entities.create(Platform, {
-      center: {x: 400, y: 200},
-      size: {x: 200, y: 25}
+      center: {x: 250, y: 300},
+      size: {x: 500, y: 25}
     }),
-
-    c.entities.create(Platform, {
-      center: {x: 100, y: 100},
-      size: {x: 200, y: 25}
-    }),
-
-    c.entities.create(Platform, {
-      center: {x: 400, y: 100},
-      size: {x: 200, y: 25}
-    }),
-
   ];
+
+  [0, 100, 200, 300].forEach(function(y) {
+    this.generatePlatform(y);
+  }.bind(this));
 };
 
 function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-PlatformController.prototype.generatePlatform = function() {
+PlatformController.prototype.generatePlatform = function(y) {
   var height = 25;
-  var centerY = 0 - (height / 2);
+  var centerY;
+  if (y !== undefined) { centerY = y; }
+  else { centerY = 0 - (height / 2); }
 
   // types of platforms:
   // hole       |========   ======|
@@ -61,7 +48,6 @@ PlatformController.prototype.generatePlatform = function() {
   var width;
 
   if (type === types.HOLE) {
-    // find hole width
     width = getRandomInt(50, 450);
     platforms = [
       c.entities.create(Platform, {
