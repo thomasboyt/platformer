@@ -1,11 +1,9 @@
+import PlatformController from './platform_controller';
+import Player from './player';
 var Coquette = require('coquette');
 
 // require is used for an out-of-system import
 var c = new Coquette(this, 'container', 500, 500, '#000');
-export default c;
-
-import PlatformController from './platform_controller';
-import Player from './player';
 
 export function init() {
   c.entities.create(PlatformController, {});
@@ -19,3 +17,5 @@ export function init() {
   c.WIDTH = 500;
   c.HEIGHT = 500;
 }
+
+export default c;
