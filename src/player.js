@@ -1,5 +1,6 @@
 import Platform from './platform';
 import PlatformController from './platform_controller';
+import c from './main';
 
 import {rectangleIntersection} from './util';
 
@@ -30,7 +31,7 @@ Player.prototype.draw = function(ctx) {
 Player.prototype.update = function(dt) {
   var GRAVITY_ACCEL = 4;
   var JUMP_VEL = -30;
-  var MOVE_SPEED = 10;
+  var MOVE_SPEED = 15;
 
   var step = dt/100;
 

@@ -5,8 +5,14 @@ var g = require('gulp-load-plugins')();
 
 var scriptFiles = './src/**/*.js';
 
+function es6moduleify(file) {
+  return require('browserify-es6-modules')(file, {
+    namespace: 'app'
+  });
+}
+
 gulp.task('buildJs', function() {
-  gulp.src('./src/main.js')
+  gulp.src('./src/init.js')
     .pipe(g.browserify({
       shim: {
         coquette: {
@@ -14,7 +20,7 @@ gulp.task('buildJs', function() {
           exports: 'Coquette'
         }
       },
-      transform: [require('browserify-es6-modules')],
+      transform: [es6moduleify],
     }))
     .pipe(gulp.dest('./tmp'));
 });

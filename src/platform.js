@@ -1,3 +1,5 @@
+import c from './main';
+
 var Platform = function(game, settings) {
   this.boundingBox = c.collider.RECTANGLE;
   this.angle = 0;
